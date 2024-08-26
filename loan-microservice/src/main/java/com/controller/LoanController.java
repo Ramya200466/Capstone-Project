@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.exception.CustomException;
 import com.model.Loan;
 import com.service.LoanService;
 
@@ -24,13 +25,13 @@ public class LoanController
 	private LoanService loanService;
 	
 	@GetMapping("/id/{id}")
-	public ResponseEntity<?> getLoanById(@PathVariable Integer id) 
+	public ResponseEntity<?> getLoanById(@PathVariable Integer id) throws CustomException 
 	{
 		Optional<Loan> loan = loanService.findLoanById(id);
 		return new ResponseEntity<>(loan, HttpStatus.OK);
 	}
 	@GetMapping("/type/{name}")
-	public ResponseEntity<?> getLoanByName(@PathVariable String name) 
+	public ResponseEntity<?> getLoanByName(@PathVariable String name) throws CustomException 
 	{
 		List<Loan> loan = loanService.findLoanByName(name);
 		return new ResponseEntity<>(loan, HttpStatus.OK);

@@ -14,11 +14,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dto.LoanApplicationDTO;
+import com.dto.LoanDTO;
+import com.exception.CustomException;
 import com.model.Customer;
 import com.model.LoanApplication;
 import com.repository.CustomerFeignClient;
 import com.service.CustomerService;
 
+import feign.FeignException;
 import jakarta.validation.Valid;
 
 @RestController
@@ -33,7 +36,7 @@ public class CustomerController
     private CustomerFeignClient customerFeignClient;
 	
 	@PostMapping("/register")
-    public Customer addCustomer(@Valid@RequestBody Customer customer) 
+    public ResponseEntity<?> addCustomer(@Valid@RequestBody Customer customer) 
     {
         return customerService.addNewCustomer(customer);
     }
@@ -46,25 +49,49 @@ public class CustomerController
     }
 	
 	@GetMapping("/loans/id/{id}")
-	public ResponseEntity<?> getLoanById(@PathVariable Integer id)
+	public ResponseEntity<LoanDTO> getLoanById(@PathVariable Integer id) throws CustomException
 	{
-		return customerFeignClient.getLoanById(id);
+		try 
+		{
+	        ResponseEntity<LoanDTO> response = customerFeignClient.getLoanById(id);
+	        if (response.getStatusCode().is4xxClientError() || response.getBody() == null) 
+	        {
+	            throw new CustomException("No Loan found with ID: " + id);
+	        }
+	        return ResponseEntity.ok(response.getBody());
+	    }
+		catch (FeignException.NotFound e) 
+		{
+	        throw new CustomException("No Loan found with ID: " + id);
+	    }
 	}
 	
 	@GetMapping("/loans/type/{type}")
-	public ResponseEntity<?> getLoanByType(@PathVariable String type)
+	public ResponseEntity<?> getLoanByType(@PathVariable String type) throws CustomException
 	{
-		return customerFeignClient.getLoanByType(type);
+		try 
+		{
+	        ResponseEntity<?> response = customerFeignClient.getLoanByType(type);
+	        if (response.getStatusCode().is4xxClientError() || response.getBody() == null) 
+	        {
+	            throw new CustomException("No Loan found with name: " + type);
+	        }
+	        return ResponseEntity.ok(response.getBody());
+	    }
+		catch (FeignException.NotFound e) 
+		{
+	        throw new CustomException("No Loan found with name: " + type);
+	    }
 	}
 	
 	@PostMapping("/apply")
-    public LoanApplication addLoanApplication(@Valid@RequestBody LoanApplication loan) 
+    public LoanApplication addLoanApplication(@Valid@RequestBody LoanApplication loan) throws CustomException 
     {
         return customerService.applyNewLoan(loan);
     }
 	
 	@GetMapping("/application/{id}")
-	public ResponseEntity<?> getDoctorById(@PathVariable Integer id) //throws CustomException 
+	public ResponseEntity<?> getDoctorById(@PathVariable Integer id) throws CustomException //throws CustomException 
 	{
 		LoanApplicationDTO application = customerService.getLoanApplicationDetailsById(id);
 		return new ResponseEntity<>(application, HttpStatus.OK);

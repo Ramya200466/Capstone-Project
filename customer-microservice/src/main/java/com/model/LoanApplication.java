@@ -6,6 +6,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name="loan_application")
@@ -17,9 +18,11 @@ public class LoanApplication
     private Integer application_id;
 
     @Column(name="customer_id")
+    @NotNull(message="customer_id missing")
     private Integer customer_id;
 
     @Column(name="loan_id")
+    @NotNull(message="loan_id missing")
     private Integer loan_id;
 
 	public LoanApplication(Integer customer_id, Integer loan_id) 

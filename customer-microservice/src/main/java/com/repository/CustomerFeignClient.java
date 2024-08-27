@@ -5,8 +5,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import com.config.FeignConfig;
 import com.dto.LoanDTO;
-@FeignClient(name="LOANMICROSERVICE")
+@FeignClient(name="LOANMICROSERVICE",configuration = FeignConfig.class)
 public interface CustomerFeignClient 
 {
 	@GetMapping("/loans/id/{id}")

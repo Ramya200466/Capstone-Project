@@ -8,22 +8,22 @@ public class LoanDTO
     
     private String name;
 
-    private Long min_amount;
+    private Long minAmount;
 
-    private Long max_amount;
+    private Long maxAmount;
     
     private Double interest;
 
-    private Integer tenure_months;
+    private Integer tenureMonths;
 
     private String description;
 
-	public Integer getId()
+	public Integer getId() 
 	{
 		return id;
 	}
 
-	public void setId(Integer id)
+	public void setId(Integer id) 
 	{
 		this.id = id;
 	}
@@ -33,7 +33,7 @@ public class LoanDTO
 		return type;
 	}
 
-	public void setType(String type) 
+	public void setType(String type)
 	{
 		this.type = type;
 	}
@@ -43,29 +43,29 @@ public class LoanDTO
 		return name;
 	}
 
-	public void setName(String name)
+	public void setName(String name) 
 	{
 		this.name = name;
 	}
 
-	public Long getMin_amount() 
+	public Long getMinAmount() 
 	{
-		return min_amount;
+		return minAmount;
 	}
 
-	public void setMin_amount(Long min_amount) 
+	public void setMinAmount(Long minAmount) 
 	{
-		this.min_amount = min_amount;
+		this.minAmount = minAmount;
 	}
 
-	public Long getMax_amount() 
+	public Long getMaxAmount() 
 	{
-		return max_amount;
+		return maxAmount;
 	}
 
-	public void setMax_amount(Long max_amount) 
+	public void setMaxAmount(Long maxAmount) 
 	{
-		this.max_amount = max_amount;
+		this.maxAmount = maxAmount;
 	}
 
 	public Double getInterest() 
@@ -73,19 +73,19 @@ public class LoanDTO
 		return interest;
 	}
 
-	public void setInterest(Double interest)
+	public void setInterest(Double interest) 
 	{
 		this.interest = interest;
 	}
 
-	public Integer getTenure_months()
+	public Integer getTenureMonths()
 	{
-		return tenure_months;
+		return tenureMonths;
 	}
 
-	public void setTenure_months(Integer tenure_months) 
+	public void setTenureMonths(Integer tenureMonths) 
 	{
-		this.tenure_months = tenure_months;
+		this.tenureMonths = tenureMonths;
 	}
 
 	public String getDescription() 
@@ -97,6 +97,4 @@ public class LoanDTO
 	{
 		this.description = description;
 	}
-    
-    
 }

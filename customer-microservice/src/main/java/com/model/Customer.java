@@ -26,7 +26,7 @@ public class Customer
 
     @Column(name="date_of_birth")
     @NotNull(message="date_of_birth missing")
-    private LocalDate date_of_birth;
+    private LocalDate dateOfBirth;
 
     @Column(name="gender")
     @NotEmpty(message="gender missing")
@@ -38,7 +38,7 @@ public class Customer
     
     @Column(name="govt_id")
     @NotEmpty(message="govt_id missing")
-    private String govt_id;	
+    private String govtId;	
     
     @Column(name="email")
     @NotEmpty(message="email missing")
@@ -48,29 +48,29 @@ public class Customer
     @NotEmpty(message="password missing")
     private String password;
 
-	public Customer(String name, LocalDate date_of_birth, String gender, String contact, String govt_id, String email,
+	public Customer(String name, LocalDate dateOfBirth, String gender, String contact, String govtId, String email,
 			String password) 
 	{
 		super();
 		this.name = name;
-		this.date_of_birth = date_of_birth;
+		this.dateOfBirth = dateOfBirth;
 		this.gender = gender;
 		this.contact = contact;
-		this.govt_id = govt_id;
+		this.govtId = govtId;
 		this.email = email;
 		this.password = password;
 	}
 
-	public Customer(Integer id, String name, LocalDate date_of_birth, String gender, String contact, String govt_id,
+	public Customer(Integer id, String name, LocalDate dateOfBirth, String gender, String contact, String govtId,
 			String email, String password) 
 	{
 		super();
 		this.id = id;
 		this.name = name;
-		this.date_of_birth = date_of_birth;
+		this.dateOfBirth = dateOfBirth;
 		this.gender = gender;
 		this.contact = contact;
-		this.govt_id = govt_id;
+		this.govtId = govtId;
 		this.email = email;
 		this.password = password;
 	}
@@ -100,14 +100,14 @@ public class Customer
 		this.name = name;
 	}
 
-	public LocalDate getDate_of_birth() 
+	public LocalDate getDateOfBirth() 
 	{
-		return date_of_birth;
+		return dateOfBirth;
 	}
 
-	public void setDate_of_birth(LocalDate date_of_birth) 
+	public void setDateOfBirth(LocalDate dateOfBirth) 
 	{
-		this.date_of_birth = date_of_birth;
+		this.dateOfBirth = dateOfBirth;
 	}
 
 	public String getGender()
@@ -130,14 +130,14 @@ public class Customer
 		this.contact = contact;
 	}
 
-	public String getGovt_id() 
+	public String getGovtId() 
 	{
-		return govt_id;
+		return govtId;
 	}
 
-	public void setGovt_id(String govt_id)
+	public void setGovtId(String govtId)
 	{
-		this.govt_id = govt_id;
+		this.govtId = govtId;
 	}
 
 	public String getEmail() 

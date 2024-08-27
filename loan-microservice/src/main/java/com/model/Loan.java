@@ -10,7 +10,8 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 @Entity
 @Table(name="loan")
-public class Loan {
+public class Loan 
+{
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="id")
@@ -25,44 +26,45 @@ public class Loan {
     private String name;
 
     @Column(name="min_amount")
-    @NotNull(message="name missing")
-    private Long min_amount;
+    @NotNull(message="minAmount missing")
+    private Long minAmount;
 
     @Column(name="max_amount")
-    @NotNull(message="name missing")
-    private Long max_amount;
+    @NotNull(message="maxAmount missing")
+    private Long maxAmount;
     
     @Column(name="interest")
-    @NotNull(message="name missing")
+    @NotNull(message="interest missing")
     private Double interest;
 
     @Column(name="tenure_months")
-    @NotNull(message="name missing")
-    private Integer tenure_months;
+    @NotNull(message="tenureMonths missing")
+    private Integer tenureMonths;
 
     @Column(name="description")
-    @NotEmpty(message="name missing")
+    @NotEmpty(message="description missing")
     private String description;
-
-	public Loan(Integer id,String name,String type, Long min_amount, Long max_amount, Double interest, Integer tenure_months,
-			String description) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.type = type;
-		this.min_amount = min_amount;
-		this.max_amount = max_amount;
-		this.interest = interest;
-		this.tenure_months = tenure_months;
-		this.description = description;
-	}
 
 	public Loan() 
 	{
 		super();
 	}
 
-	public Integer getId() 
+	public Loan(Integer id, String type, String name, Long minAmount, Long maxAmount, Double interest,
+			Integer tenureMonths, String description) 
+	{
+		super();
+		this.id = id;
+		this.type = type;
+		this.name = name;
+		this.minAmount = minAmount;
+		this.maxAmount = maxAmount;
+		this.interest = interest;
+		this.tenureMonths = tenureMonths;
+		this.description = description;
+	}
+
+	public Integer getId()
 	{
 		return id;
 	}
@@ -77,7 +79,7 @@ public class Loan {
 		return type;
 	}
 
-	public void setType(String type)
+	public void setType(String type) 
 	{
 		this.type = type;
 	}
@@ -92,47 +94,47 @@ public class Loan {
 		this.name = name;
 	}
 
-	public Long getMin_amount() 
+	public Long getMinAmount()
 	{
-		return min_amount;
+		return minAmount;
 	}
 
-	public void setMin_amount(Long min_amount) 
+	public void setMinAmount(Long minAmount) 
 	{
-		this.min_amount = min_amount;
+		this.minAmount = minAmount;
 	}
 
-	public Long getMax_amount()
+	public Long getMaxAmount()
 	{
-		return max_amount;
+		return maxAmount;
 	}
 
-	public void setMax_amount(Long max_amount) 
+	public void setMaxAmount(Long maxAmount) 
 	{
-		this.max_amount = max_amount;
+		this.maxAmount = maxAmount;
 	}
 
-	public Double getInterest()
+	public Double getInterest() 
 	{
 		return interest;
 	}
 
-	public void setInterest(Double interest)
+	public void setInterest(Double interest) 
 	{
 		this.interest = interest;
 	}
 
-	public Integer getTenure_months() 
+	public Integer getTenureMonths() 
 	{
-		return tenure_months;
+		return tenureMonths;
 	}
 
-	public void setTenure_months(Integer tenure_months) 
+	public void setTenureMonths(Integer tenureMonths)
 	{
-		this.tenure_months = tenure_months;
+		this.tenureMonths = tenureMonths;
 	}
 
-	public String getDescription() 
+	public String getDescription()
 	{
 		return description;
 	}
@@ -141,5 +143,4 @@ public class Loan {
 	{
 		this.description = description;
 	}
-	
 }

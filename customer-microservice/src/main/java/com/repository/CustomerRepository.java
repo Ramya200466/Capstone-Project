@@ -15,4 +15,6 @@ public interface CustomerRepository extends CrudRepository<Customer,Integer>
 	Optional<Customer> findNameById(Integer id);
 	
 	Optional<Customer> findByEmail(String email);
+	
+	Optional<Customer> findByGovtId(String govtId);
 }

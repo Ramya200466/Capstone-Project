@@ -1,11 +1,13 @@
 package com.service;
 
+import java.time.LocalDate;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import com.dto.LoanApplicationDTO;
 import com.dto.LoanDTO;
@@ -16,7 +18,6 @@ import com.repository.CustomerFeignClient;
 import com.repository.CustomerRepository;
 import com.repository.LoanApplicationRepository;
 
-import feign.FeignException;
 
 @Service
 public class CustomerService 
@@ -30,6 +31,15 @@ public class CustomerService
 	@Autowired
     CustomerFeignClient customerFeignClient;
 	
+	public ResponseEntity<LoanDTO> getLoanById(Integer id)
+	{
+		return customerFeignClient.getLoanById(id);
+	}
+	
+	public ResponseEntity<?> getLoanByType(@PathVariable String type)
+	{
+		return customerFeignClient.getLoanByType(type);
+	}
 	public ResponseEntity<?> addNewCustomer(Customer customer) 
 	{
 		Optional<Customer> existingPatient = customerRepos.findByEmail(customer.getEmail());
@@ -37,6 +47,17 @@ public class CustomerService
         if (existingPatient.isPresent()) 
         {
             String message = "Customer already registered with email: " + customer.getEmail();
+            return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
+        }
+        Optional<Customer> patient = customerRepos.findByGovtId(customer.getGovtId());
+        if (patient.isPresent()) 
+        {
+            String message = "Customer already registered with govtId: " + customer.getGovtId();
+            return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
+        }
+        if (customer.getDateOfBirth().isAfter(LocalDate.now())) 
+        {
+            String message = "Date of birth must be in the past.";
             return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
         }
 		Customer customer_=customerRepos.save(customer);
@@ -58,31 +79,18 @@ public class CustomerService
 
 	public LoanApplication applyNewLoan(LoanApplication loan) throws CustomException
 	{
-		Optional<Customer> customer =customerRepos.findById(loan.getCustomer_id());
+		Optional<Customer> customer =customerRepos.findById(loan.getCustomerId());
         if (!customer.isPresent()) 
         {
-            throw new CustomException("No Customer found with ID: " +loan.getCustomer_id());
+            throw new CustomException("No Customer found with ID: " +loan.getCustomerId());
         }
-        try 
+        ResponseEntity<?> response = customerFeignClient.getLoanById(loan.getLoanId());
+        if (response.getStatusCode().isSameCodeAs(HttpStatus.NO_CONTENT) || response.getBody() == null) 
         {
-            ResponseEntity<?> response = customerFeignClient.getLoanById(loan.getLoan_id());
-            if (response.getStatusCode().isSameCodeAs(HttpStatus.NO_CONTENT) || response.getBody() == null) 
-            {
-                throw new CustomException("No loan found with ID: " + loan.getLoan_id());
-            }
-        }
-        catch (FeignException e) 
-        {
-        	throw new CustomException("No loan found with ID: " + loan.getLoan_id());
+            throw new CustomException("No loan found with ID: " + loan.getLoanId());
         }
 		LoanApplication loan_=loanRepos.save(loan);
 		return loanRepos.save(loan_);
-	}
-	public Optional<LoanApplication> getLoanApplicationDetailsById1(int id) //throws CustomException 
-	{
-		Optional<LoanApplication> application =  loanRepos.findById(id);
-		
-		return application;
 	}
 	public LoanApplicationDTO getLoanApplicationDetailsById(Integer id) throws CustomException //throws CustomException 
 	{
@@ -93,14 +101,14 @@ public class CustomerService
 	    }
 	    LoanApplication application = applicationOptional.get();
 	    
-	    ResponseEntity<LoanDTO> response =customerFeignClient.getLoanById(application.getLoan_id());
+	    ResponseEntity<LoanDTO> response =customerFeignClient.getLoanById(application.getLoanId());
 	    LoanDTO loan = response.getBody();
 	    String loanName = loan.getName();
-	    Optional<Customer> customer = customerRepos.findNameById(application.getCustomer_id());
+	    Optional<Customer> customer = customerRepos.findNameById(application.getCustomerId());
 	    String customerName = customer.get().getName();
 	    
 	    LoanApplicationDTO loanApplicationDTO = new LoanApplicationDTO();
-	    loanApplicationDTO.setApplicationId(application.getApplication_id());;
+	    loanApplicationDTO.setApplicationId(application.getApplicationId());;
 	    loanApplicationDTO.setLoanName(loanName);
 	    loanApplicationDTO.setCustomerName(customerName);
 	    

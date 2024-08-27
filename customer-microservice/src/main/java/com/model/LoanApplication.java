@@ -15,51 +15,51 @@ public class LoanApplication
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="application_id")
-    private Integer application_id;
+    private Integer applicationId;
 
     @Column(name="customer_id")
     @NotNull(message="customer_id missing")
-    private Integer customer_id;
+    private Integer customerId;
 
     @Column(name="loan_id")
     @NotNull(message="loan_id missing")
-    private Integer loan_id;
+    private Integer loanId;
 
-	public LoanApplication(Integer customer_id, Integer loan_id) 
+	public LoanApplication(Integer customerId, Integer loanId) 
 	{
 		super();
-		this.customer_id = customer_id;
-		this.loan_id = loan_id;
+		this.customerId = customerId;
+		this.loanId = loanId;
 	}
 
-	public Integer getApplication_id() 
+	public Integer getApplicationId() 
 	{
-		return application_id;
+		return applicationId;
 	}
 
-	public void setApplication_id(Integer application_id) 
+	public void setApplicationId(Integer applicationId) 
 	{
-		this.application_id = application_id;
+		this.applicationId = applicationId;
 	}
 
-	public Integer getCustomer_id() 
+	public Integer getCustomerId() 
 	{
-		return customer_id;
+		return customerId;
 	}
 
-	public void setCustomer_id(Integer customer_id) 
+	public void setCustomerId(Integer customerId) 
 	{
-		this.customer_id = customer_id;
+		this.customerId = customerId;
 	}
 
-	public Integer getLoan_id() 
+	public Integer getLoanId() 
 	{
-		return loan_id;
+		return loanId;
 	}
 
-	public void setLoan_id(Integer loan_id) 
+	public void setLoanId(Integer loanId) 
 	{
-		this.loan_id = loan_id;
+		this.loanId = loanId;
 	}
 
 	public LoanApplication()
@@ -67,11 +67,11 @@ public class LoanApplication
 		super();
 	}
 
-	public LoanApplication(Integer application_id, Integer customer_id, Integer loan_id) 
+	public LoanApplication(Integer applicationId, Integer customerId, Integer loanId) 
 	{
 		super();
-		this.application_id = application_id;
-		this.customer_id = customer_id;
-		this.loan_id = loan_id;
+		this.applicationId = applicationId;
+		this.customerId = customerId;
+		this.loanId = loanId;
 	}
 }

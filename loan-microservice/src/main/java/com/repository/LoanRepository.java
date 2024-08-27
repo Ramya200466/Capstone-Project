@@ -11,5 +11,5 @@ import com.model.Loan;
 public interface LoanRepository extends CrudRepository<Loan,Integer>
 {	
 	Optional<Loan> findById(Integer id);
-	List<Loan> findByName(String name);
+	List<Loan> findByType(String type);
 }

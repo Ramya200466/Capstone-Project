@@ -22,6 +22,7 @@ import com.model.Customer;
 import com.model.LoanApplication;
 import com.service.CustomerService;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Positive;
 
 @RestController
@@ -42,7 +43,7 @@ public class CustomerController
     }
 	
 	@PostMapping("/login")
-    public ResponseEntity<?> loginCustomer(String email,String password) 
+    public ResponseEntity<?> loginCustomer(@Email String email ,String password) 
     {
 		logger.info("Customer login attempt with email: {}", email);
 		String customer= customerService.loginCustomer(email,password);

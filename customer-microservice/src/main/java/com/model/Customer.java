@@ -11,6 +11,9 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Past;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name="customer")
@@ -22,23 +25,29 @@ public class Customer
     private Integer id;
 
     @Column(name="name")
-    @NotEmpty(message="name missing")
+    @NotEmpty(message="Name is required")
+    @Size(min = 2, max = 50, message = "Name must be between 2 and 50 characters")
+    @Pattern(regexp = "^[a-zA-Z\\s]+$", message = "Name can only contain letters and spaces")
     private String name;
 
     @Column(name="date_of_birth")
-    @NotNull(message="date_of_birth missing")
+    @NotNull(message="Date of Birth is required")
+    @Past(message = "Date of Birth must be in the past")
     private LocalDate dateOfBirth;
 
     @Column(name="gender")
-    @NotEmpty(message="gender missing")
+    @NotEmpty(message="Gender is required")
+    @Pattern(regexp = "^(Male|Female|Other)$", message = "Gender must be Male, Female, or Other")
     private String gender;
     
     @Column(name="contact")
-    @NotEmpty(message="contact missing")
+    @NotEmpty(message="Invalid contact")
+    @Size(min=10,message="Contact must be atleast 10 digits")
     private String contact;	
     
     @Column(name="govt_id")
-    @NotEmpty(message="govt_id missing")
+    @NotEmpty(message = "Government ID is missing")
+    @Size(min = 1, max = 20, message = "Government ID must be between 1 and 20 characters")
     private String govtId;	
     
     @Column(name="email")
@@ -47,7 +56,8 @@ public class Customer
      private String email;	
     
     @Column(name="password")
-    @NotEmpty(message="password missing")
+    @NotEmpty(message = "Password is missing")
+    @Size(min = 8, message = "Password must be at least 8 characters long")
     private String password;
 
 	public Customer(String name, LocalDate dateOfBirth, String gender, String contact, String govtId, String email,

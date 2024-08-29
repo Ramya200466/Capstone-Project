@@ -42,7 +42,7 @@ public class Customer
     
     @Column(name="contact")
     @NotEmpty(message="Invalid contact")
-    @Size(min=10,message="Contact must be atleast 10 digits")
+    @Pattern(regexp = "^\\d{10}$", message = "Contact must be a 10-digit number")
     private String contact;	
     
     @Column(name="govt_id")

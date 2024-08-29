@@ -1,6 +1,6 @@
 package com.repository;
 
-import java.util.Optional;
+import java.util.List;
 
 import org.springframework.data.repository.CrudRepository;
 
@@ -8,5 +8,5 @@ import com.model.LoanApplication;
 
 public interface LoanApplicationRepository extends CrudRepository<LoanApplication,Integer>
 {
-	Optional<LoanApplication> findById(Integer id);
+	List<LoanApplication> findByCustomerId(Integer id);
 }
